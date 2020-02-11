@@ -1,0 +1,54 @@
+@font-face {
+	font-family: "DejaVu Serif";
+	font-weight: normal;
+	font-style: normal;
+	src: url("DejaVuSerif.ttf");
+}
+@font-face {
+	font-family: "DejaVu Serif";
+	font-weight: normal;
+	font-style: italic;
+	src: url("DejaVuSerif-Italic.ttf");
+}
+@font-face {
+	font-family: "DejaVu Serif Condensed";
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: condensed;
+	src: url("DejaVuSerifCondensed-Bold.ttf");
+}
+
+@page {
+	size: auto;
+	margin: 30px 25px;
+}
+
+body {
+	font-family: "DejaVu Serif", serif;
+	font-size: x-small;
+	line-height: 1.5;
+	text-align: justify;
+}
+
+p {
+	text-indent: 1.2em;
+	margin: 0;
+}
+
+b {
+	font-stretch: condensed;
+	font-weight: bold;
+}
+
+p.indent {
+	text-indent: 0;
+}
+
+p.afterword {
+	margin-left: 1.5em;
+	margin-top: 1.5em;
+	font-stretch: condensed;
+	font-weight: bold;
+	font-size: 125%;
+	text-indent: 0;
+}
