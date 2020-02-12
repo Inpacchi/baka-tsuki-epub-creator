@@ -44,6 +44,9 @@ def initialize(url):
     global TITLE
     TITLE = url.split('title=')[1].replace(':', '_')
 
+    global page_index
+    page_index = 1
+
     if not path.exists('output'):
         mkdir('output')
 
