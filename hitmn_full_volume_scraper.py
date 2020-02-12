@@ -347,6 +347,7 @@ def populate_epub(book):
 
     global page_index
     page_index = 1
+    first_image = True
 
     for image in image_list:
         try:
@@ -358,9 +359,10 @@ def populate_epub(book):
                 title = image.split('-')[1]
         title = title.strip('.jpg')
 
-        if title.lower() == 'cover':
+        if title.lower() == 'cover' or first_image:
             book.set_cover(image, open(f'{image_file_path}/{image}', 'rb').read())
             book.spine.append('cover')
+            first_image = False
         else:
             book.add_item(epub.EpubItem(uid=image,
                                         file_name=image,
