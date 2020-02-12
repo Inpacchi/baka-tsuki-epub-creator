@@ -13,7 +13,7 @@ from PIL import Image
 # Global Constants
 TITLE = None
 BULLET_HEADER = '<p style="text-align: center; font-size: 300%; text-indent: 0;">•</p>\n'
-HEADERS = ('Prologue', 'Chapter', 'Afterword', 'Notes')
+HEADERS = ('School_Rules', 'Prologue', 'Chapter', 'Afterword', 'Notes')
 
 
 # Global Variables
@@ -101,7 +101,7 @@ def chapter_downloader(chapter, next_chapter=None):
     if 'Notes' in title:
         return
 
-    if 'Afterword' in title:
+    if any(header_id in title for header_id in ('Afterword', 'School_Rules')):
         chapter = chapter.find_next_sibling()
         while True:
             if chapter == next_chapter or chapter is None:
@@ -190,8 +190,8 @@ def create_chapter_html(title, html):
             html_file.write('  </head>\n')
             html_file.write('  <body>\n')
 
-            if title == 'Afterword':
-                html_file.write(f'    <center><h2>Afterword</h2></center>\n')
+            if title in ('Afterword', 'School_Rules'):
+                html_file.write(f'    <h2>{title.replace("_", " ")}</h2>\n')
 
             if point_allocation_tag is not None:
                 html_file.write('    <center>\n')
@@ -384,7 +384,7 @@ def populate_epub(book):
             starting_index = title.find(' Title Image ')
             title = title[0:starting_index]
             book.toc.append(epub.Link(xhtml, title, uid))
-        elif any(name in xhtml for name in ('_Title_Page', '_Table_of_Contents_', '_Afterword')):
+        elif any(name in xhtml for name in ('_Title_Page', '_Table_of_Contents_', '_Afterword', '_School_Rules')):
             book.toc.append(epub.Link(xhtml, title, uid))
         elif any(name in xhtml for name in ('_Glossary_', '_Character_Introduction_', '_Uniform_',
                                             '_Characters_', '_World_', '_World_Info_', '_History_', '_Introduction_')):
