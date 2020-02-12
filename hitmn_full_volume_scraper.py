@@ -53,11 +53,8 @@ def initialize(url):
     if not path.exists(f'{TITLE}'):
         mkdir(f'{TITLE}')
 
-    if not path.exists(f'{TITLE}/src'):
-        mkdir(f'{TITLE}/src')
-
-    if not path.exists(f'{TITLE}/src/images'):
-        mkdir(f'{TITLE}/src/images')
+    if not path.exists(f'{TITLE}/images'):
+        mkdir(f'{TITLE}/images')
 
 
 def download_pre_chapter_images(page_soup):
@@ -182,7 +179,7 @@ def create_chapter_html(title, html):
             break
 
     global page_index
-    file_path = f'{TITLE}/src/{format(page_index, "03")}_{title}.xhtml'
+    file_path = f'{TITLE}/{format(page_index, "03")}_{title}.xhtml'
     if not path.exists(file_path):
         with open(file_path, 'w+', encoding='utf-8') as html_file:
             html_file.write('<?xml version="1.0" encoding="utf-8"?>\n')
@@ -238,12 +235,12 @@ def create_image_html(image_path, image_title, switch=False):
         file_name = f'{image_title}_Image_{page_number}.xhtml'
 
     global page_index
-    file_path = f'{TITLE}/src/{format(page_index, "03")}_{file_name}'
+    file_path = f'{TITLE}/{format(page_index, "03")}_{file_name}'
     page_index += 1
 
     if not path.exists(file_path):
         with open(file_path, mode='w+') as image_html_file:
-            image = Image.open(f'{TITLE}/src/images/{image_name}')
+            image = Image.open(f'{TITLE}/images/{image_name}')
             image_html_file.write('<?xml version="1.0" encoding="utf-8"?>\n')
             image_html_file.write('<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink">\n')
             image_html_file.write('  <head>\n')
@@ -268,10 +265,10 @@ def create_image_html(image_path, image_title, switch=False):
 
 def copy_static_files(book):
     stylesheet_src = 'static_files/stylesheet'
-    stylesheet_dest = f'{TITLE}/src/stylesheet'
+    stylesheet_dest = f'{TITLE}/stylesheet'
 
     fonts_src = 'static_files/fonts'
-    fonts_dest = f'{TITLE}/src/fonts'
+    fonts_dest = f'{TITLE}/fonts'
 
     try:
         copytree(stylesheet_src, stylesheet_dest)
@@ -333,8 +330,8 @@ def create_book(title=None):
 
 
 def populate_epub(book):
-    image_file_path = f'{TITLE}/src/images'
-    html_file_path = f'{TITLE}/src'
+    image_file_path = f'{TITLE}/images'
+    html_file_path = f'{TITLE}'
 
     image_list = sorted(listdir(image_file_path))
     xhtml_list = sorted(glob(f'{html_file_path}/*.xhtml'))
@@ -366,7 +363,7 @@ def populate_epub(book):
     illustration_index = 1
 
     for xhtml in xhtml_list:
-        xhtml = xhtml.split('/')[2]
+        xhtml = xhtml.split('/')[1]
         title = xhtml.strip(f'format({page_index}, "03")_').strip('.xhtml').replace('_', ' ')
 
         if 'pn-' in title:
