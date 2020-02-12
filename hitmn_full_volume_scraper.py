@@ -63,7 +63,7 @@ def download_pre_chapter_images(page_soup):
     while image is not None:
         title = sub(r'[\\/:*"<>+|.%$^&£\n?\']', '', image.find_all('div')[3].text)
 
-        if 'Page' in title:
+        if not 'Title Page' == title and 'Page' in title:
             image = None
             break
 
