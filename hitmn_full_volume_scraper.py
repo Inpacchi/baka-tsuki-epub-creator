@@ -307,12 +307,17 @@ def copy_static_files(book):
                                     content=font.read()))
 
 
-def create_book(title=None):
+def create_book(title=None, volume=None):
     book = epub.EpubBook()
     if title is not None:
         global TITLE
         TITLE = title
-    volume = str(TITLE.split('_')[2])
+
+    if volume is not None:
+        file_name = f'{TITLE[0:15]}{volume}'
+    else:
+        volume = str(TITLE.split('_')[2])
+        file_name = TITLE
 
     # Epub Metadata
     book.set_title(f'Kyoukai Senjou no Horizon {volume}')
@@ -330,7 +335,7 @@ def create_book(title=None):
     book.add_item(epub.EpubNav())
 
     # Create Epub
-    epub.write_epub(f'output/{TITLE}.epub', book)
+    epub.write_epub(f'output/{file_name}.epub', book)
 
 
 def populate_epub(book):
