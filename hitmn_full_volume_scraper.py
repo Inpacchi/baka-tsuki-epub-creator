@@ -74,7 +74,11 @@ def download_pre_chapter_images(page_soup):
             try:
                 page_number = image_tag.split('-')[2].split('.')[0]
             except IndexError:
-                page_number = image_tag.split('-')[1].split('.')[0]
+                try:
+                    page_number = image_tag.split('-')[1].split('.')[0]
+                except IndexError:
+                    if title is None:
+                        raise IndexError
 
         if page_number == 'cover':
             title = 'Cover'
