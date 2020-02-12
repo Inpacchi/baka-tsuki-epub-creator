@@ -153,8 +153,8 @@ def download_image(block):
         image_url = BeautifulSoup(get(f'https://baka-tsuki.org{a_tag_1["href"]}').content, 'html.parser')
         for a_tag_2 in image_url.find_all('a', href=True):
             if all(selector in a_tag_2['href'] for selector in ['project', 'images']):
-                image_name = a_tag_2['href'].split('/')[5]
-                image_path = f'{TITLE}/src/images/{image_name}'
+                image_name = a_tag_2['href'].split('/')[5].split('.')[0]
+                image_path = f'{TITLE}/images/{image_name}.jpg'
                 if not path.exists(image_path):
                     image_bytes = get(f'https://baka-tsuki.org{a_tag_2["href"]}', stream=True)
                     if image_bytes.status_code == 200:
